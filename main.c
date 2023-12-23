@@ -84,7 +84,7 @@ void nextTurn(unsigned int *turn) {
 }
 
 _Bool executeMoveIfValid(unsigned int field[], const unsigned int coordinate, const unsigned int turn, const unsigned int rowSizeSquared) {
-    if (coordinate >= 0 && coordinate < rowSizeSquared && field[coordinate] == 0) {
+    if (coordinate < rowSizeSquared && field[coordinate] == 0) {
         field[coordinate] = turn;
         return 0;
     }
@@ -92,7 +92,7 @@ _Bool executeMoveIfValid(unsigned int field[], const unsigned int coordinate, co
 }
 
 void playTicTacToe() {
-    size_t rowSizeSquared = ROW_SIZE * ROW_SIZE;
+    const size_t rowSizeSquared = ROW_SIZE * ROW_SIZE;
     unsigned int field[rowSizeSquared];
 
     for (int i = 0; i < rowSizeSquared; i++) {
