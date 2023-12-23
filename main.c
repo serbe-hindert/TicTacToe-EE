@@ -16,7 +16,7 @@ constexpr unsigned int ROW_SIZE = 3;
 constexpr unsigned int NUMBER_PLAYERS = 2;
 constexpr char PLAYING_CHARACTERS[NUMBER_PLAYERS + 1] = {' ', 'X', 'O'};
 // input method interface: int functionname(int field[], unsigned int ownTurn) {...return move;}
-const unsigned int (*INPUT_METHODS[NUMBER_PLAYERS])(unsigned int field[], unsigned int ownTurn) = {inputMoveByUser};
+const unsigned int (*INPUT_METHODS[NUMBER_PLAYERS])(unsigned int field[], unsigned int ownTurn) = {inputMoveByUser, inputMoveByUser};
 // output method interface: void functionname(int field[]) {...}
 const void (*OUTPUT_METHOD)(unsigned int field[]) = printField;
 
