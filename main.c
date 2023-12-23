@@ -3,10 +3,10 @@
 // Game Functions
 _Bool hasWon(unsigned int field[], const unsigned int turn, const size_t rowSizeSquared);
 void nextTurn(unsigned int *turn);
-_Bool executeMoveIfValid(unsigned int field[], unsigned int coordinate, unsigned int turn);
+_Bool executeMoveIfValid(unsigned int field[], const unsigned int coordinate, const unsigned int turn, const unsigned int rowSizeSquared);
 
 // Output Functions
-void printField(unsigned int field[]);
+void printField(unsigned int field[], unsigned int turn);
 
 // Input Functions
 unsigned int inputMoveByUser(unsigned int field[], unsigned int ownTurn);
@@ -18,7 +18,7 @@ constexpr char PLAYING_CHARACTERS[NUMBER_PLAYERS + 1] = {' ', 'X', 'O'};
 // input method interface: int functionname(int field[], unsigned int ownTurn) {...return move;}
 const unsigned int (*INPUT_METHODS[NUMBER_PLAYERS])(unsigned int field[], unsigned int ownTurn) = {inputMoveByUser, inputMoveByUser};
 // output method interface: void functionname(int field[]) {...}
-const void (*OUTPUT_METHOD)(unsigned int field[]) = printField;
+const void (*OUTPUT_METHOD)(unsigned int field[], unsigned int turn) = printField;
 
 // TicTacToe Launcher
 void playTicTacToe();
@@ -83,8 +83,8 @@ void nextTurn(unsigned int *turn) {
     *turn = *turn + 1;
 }
 
-_Bool executeMoveIfValid(unsigned int field[], unsigned int coordinate, unsigned int turn) {
-    if (field[coordinate] == 0) {
+_Bool executeMoveIfValid(unsigned int field[], const unsigned int coordinate, const unsigned int turn, const unsigned int rowSizeSquared) {
+    if (coordinate >= 0 && coordinate < rowSizeSquared && field[coordinate] == 0) {
         field[coordinate] = turn;
         return 0;
     }
@@ -109,10 +109,10 @@ void playTicTacToe() {
             // play move
             fieldCoordinate = INPUT_METHODS[turn - 1](field, turn);
         // validate and execute move
-        } while (executeMoveIfValid(field, fieldCoordinate, turn));
+        } while (executeMoveIfValid(field, fieldCoordinate, turn, rowSizeSquared));
 
         // print field
-        OUTPUT_METHOD(field);
+        OUTPUT_METHOD(field, turn);
     } while (!hasWon(field, turn, rowSizeSquared));
 
     printf("\n\n%c has won the game!", PLAYING_CHARACTERS[turn]);
@@ -120,7 +120,7 @@ void playTicTacToe() {
 
 // Concrete Implementations
 
-void printField(unsigned int field[]) {
+void printField(unsigned int field[], unsigned int turn) {
     printf("\n");
     for (int i = 0; i < ROW_SIZE; i++) {
         printf(" %c", PLAYING_CHARACTERS[field[i * ROW_SIZE]]);
