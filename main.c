@@ -51,7 +51,7 @@ _Bool hasWon(unsigned int field[], const unsigned int turn, const size_t rowSize
             return 1;
         }
     }
-    // X
+    // diagonal
     winningConfiguration = 1;
     for (int i = 0; i < rowSizeSquared; i += 1 + ROW_SIZE) {
         if (field[i] != turn) {
@@ -62,7 +62,6 @@ _Bool hasWon(unsigned int field[], const unsigned int turn, const size_t rowSize
     if (winningConfiguration) {
         return 1;
     }
-    printf("hier noch gut");
     winningConfiguration = 1;
     for (int i = rowSizeSquared - ROW_SIZE; i > 0; i += 1 - ROW_SIZE) {
         if (field[i] != turn) {
@@ -73,7 +72,6 @@ _Bool hasWon(unsigned int field[], const unsigned int turn, const size_t rowSize
     if (winningConfiguration) {
         return 1;
     }
-    printf("hier net");
     return 0;
 }
 
