@@ -92,7 +92,7 @@ _Bool executeMoveIfValid(unsigned int field[], const unsigned int coordinate, co
 }
 
 void playTicTacToe() {
-    const size_t rowSizeSquared = ROW_SIZE * ROW_SIZE;
+    constexpr size_t rowSizeSquared = ROW_SIZE * ROW_SIZE;
     unsigned int field[rowSizeSquared];
 
     for (int i = 0; i < rowSizeSquared; i++) {
