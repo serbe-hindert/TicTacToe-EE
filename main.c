@@ -7,6 +7,7 @@ _Bool executeMoveIfValid(unsigned int field[], const unsigned int coordinate, co
 
 // Output Functions
 void printField(unsigned int field[], unsigned int turn);
+void printWinner(const unsigned int turn);
 
 // Input Functions
 unsigned int inputMoveByUser(unsigned int field[], unsigned int ownTurn);
@@ -19,6 +20,7 @@ constexpr char PLAYING_CHARACTERS[NUMBER_PLAYERS + 1] = {' ', 'X', 'O'};
 const unsigned int (*INPUT_METHODS[NUMBER_PLAYERS])(unsigned int field[], unsigned int ownTurn) = {inputMoveByUser, inputMoveByUser};
 // output method interface: void functionname(int field[]) {...}
 const void (*OUTPUT_METHOD)(unsigned int field[], unsigned int turn) = printField;
+const void (*OUTPUT_WINNER_METHOD)(const unsigned int turn) = printWinner;
 
 // TicTacToe Launcher
 void playTicTacToe();
@@ -115,7 +117,8 @@ void playTicTacToe() {
         OUTPUT_METHOD(field, turn);
     } while (!hasWon(field, turn, rowSizeSquared));
 
-    printf("\n\n%c has won the game!", PLAYING_CHARACTERS[turn]);
+    // output winner
+    OUTPUT_WINNER_METHOD(turn);
 }
 
 // Concrete Implementations
@@ -129,6 +132,10 @@ void printField(unsigned int field[], unsigned int turn) {
         }
         printf("\n");
     }
+}
+
+void printWinner(const unsigned int turn) {
+    printf("\n\n%c has won the game!", PLAYING_CHARACTERS[turn]);
 }
 
 unsigned int inputMoveByUser(unsigned int field[], unsigned int ownTurn) {
